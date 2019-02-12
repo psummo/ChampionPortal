@@ -2,13 +2,29 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import {HttpClientModule} from '@angular/common/http';
+import {Route, RouterModule, Routes} from '@angular/router';
+import { MatchListComponent } from './match-list/match-list.component';
+import { MatchDetailComponent } from './match-detail/match-detail.component';
+import { TeamDetailComponent } from './team-detail/team-detail.component';
+
+const appRoutes: Routes = [
+  {path: '',  component: MatchListComponent},
+  {path: 'match/:id', component: MatchDetailComponent},
+  {path: 'team/:id', component: TeamDetailComponent}
+];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MatchListComponent,
+    MatchDetailComponent,
+    TeamDetailComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

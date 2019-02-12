@@ -1,9 +1,11 @@
-enum PlayerAttributes {
+enum SquadAttributes {
   id = 'id',
   name = 'name',
   position = 'position',
   nationality = 'nationality',
-  shirtNumb = 'shirtNumb'
+  shirtNumb = 'shirtNumb',
+  role = 'role',
+  countryOfBirth = 'countryOfBirth'
 }
 
 export class Player {
@@ -12,14 +14,18 @@ export class Player {
   position: string;
   nationality: string;
   shirtNumb: number;
+  role: string;
+  countryOfBirth: string;
 
-  static fromJson(playerJson: any): Player {
-    const player = new Player();
-    player.id = playerJson[PlayerAttributes.id];
-    player.name = playerJson[PlayerAttributes.name];
-    player.position = playerJson[PlayerAttributes.position];
-    player.nationality = playerJson[PlayerAttributes.nationality];
-    player.shirtNumb = playerJson[PlayerAttributes.shirtNumb];
-    return player;
+  static fromJson(squadJson: any): Player {
+    const squad = new Player();
+    squad.id = squadJson[SquadAttributes.id];
+    squad.name = squadJson[SquadAttributes.name];
+    squad.position = squadJson[SquadAttributes.position];
+    squad.nationality = squadJson[SquadAttributes.nationality];
+    squad.shirtNumb = squadJson[SquadAttributes.shirtNumb];
+    squad.role = squadJson[SquadAttributes.role];
+    squad.countryOfBirth = squadJson[SquadAttributes.countryOfBirth];
+    return squad;
   }
 }

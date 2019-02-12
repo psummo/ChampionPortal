@@ -10,16 +10,17 @@ enum MatchAttributes {
   utcDate = 'utcDate',
   matchDay = 'matchDay',
   homeTeam = 'homeTeam',
-  awayTeam = 'awayteam'
+  awayTeam = 'awayTeam',
+  name = 'name'
 }
 
 export class Match {
   id: number;
-  fullTime: string;
-  halfTime: string;
-  extraTime: string;
+  fullTime: number[];
+  halfTime: number[];
+  extraTime: number[];
   penalties: string;
-  referees: string;
+  referees: string[];
   utcDate: string;
   matchDay: string;
   homeTeam: Team;
@@ -27,12 +28,15 @@ export class Match {
 
   static fromJson(matchJson: any): Match {
     const match = new Match();
+    console.log(matchJson);
     match.id = matchJson[MatchAttributes.id];
     match.fullTime = matchJson[MatchAttributes.fullTime];
     match.halfTime = matchJson[MatchAttributes.halfTime];
     match.extraTime = matchJson[MatchAttributes.extraTime];
     match.penalties = matchJson[MatchAttributes.penalties];
-    match.referees = matchJson[MatchAttributes.referees];
+    for (let i = 0; i < matchJson[MatchAttributes.referees].lenght; i++) {
+      match.referees.push(matchJson[MatchAttributes.referees][i][MatchAttributes.name]);
+    }
     match.utcDate = matchJson[MatchAttributes.utcDate];
     match.matchDay = matchJson[MatchAttributes.matchDay];
     match.homeTeam = Team.fromJson(matchJson[MatchAttributes.homeTeam]);
