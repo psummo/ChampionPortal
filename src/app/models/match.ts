@@ -28,7 +28,6 @@ export class Match {
 
   static fromJson(matchJson: any): Match {
     const match = new Match();
-    console.log(matchJson);
     match.id = matchJson[MatchAttributes.id];
     match.fullTime = matchJson[MatchAttributes.fullTime];
     match.halfTime = matchJson[MatchAttributes.halfTime];

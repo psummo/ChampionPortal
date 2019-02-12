@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {MatchService} from '../services/match.service';
 import {Match} from '../models/match';
+import {formatDate} from '@angular/common';
+import {TeamService} from '../services/team.service';
+import {Team} from '../models/team';
 
 @Component({
   selector: 'app-match-list',
@@ -10,15 +13,21 @@ import {Match} from '../models/match';
 export class MatchListComponent implements OnInit {
 
   matchList: Match[] = [];
-  constructor(private matchService: MatchService) {}
+  teamList: Team[] = [];
+  selectedTeamId: number;
+  constructor(private matchService: MatchService, private teamService: TeamService) {}
 
-  ngOnInit() {
+    ngOnInit() {
+    this.teamService.getAllTeam().subscribe((success) => this.teamList = success);
+    /*
     this.matchService.getMatchList().subscribe( (response) => {
         this.matchList = response;
       }, (error1 => {
-        console.log("CIAO");
       })
-    );
+    );*/
   }
 
+  retriveTeamInfo() {
+    console.log(this.selectedTeamId);
+  }
 }
