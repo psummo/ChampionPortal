@@ -1,4 +1,7 @@
+import {Team} from './team';
+
 enum MatchAttributes {
+  id = 'id',
   fullTime = 'fullTime',
   halfTime = 'halfTime',
   extraTime = 'extraTime',
@@ -11,6 +14,7 @@ enum MatchAttributes {
 }
 
 export class Match {
+  id: number;
   fullTime: string;
   halfTime: string;
   extraTime: string;
@@ -18,20 +22,21 @@ export class Match {
   referees: string;
   utcDate: string;
   matchDay: string;
-  homeTeam: string;
-  awayTeam: string;
+  homeTeam: Team;
+  awayTeam: Team;
 
   static fromJson(matchJson: any): Match {
     const match = new Match();
-    match.fullTime = matchJson[' fullTime '];
-    match.halfTime = matchJson[' halfTime '];
-    match.extraTime = matchJson[' extraTime '];
-    match.penalties = matchJson[' penalties '];
-    match.referees = matchJson[' referees '];
-    match.utcDate = matchJson[' utcDate '];
-    match.matchDay = matchJson[' matchDay '];
-    match.homeTeam = matchJson[' homeTeam '];
-    match.awayTeam = matchJson[' awayTeam '];
+    match.id = matchJson[MatchAttributes.id];
+    match.fullTime = matchJson[MatchAttributes.fullTime];
+    match.halfTime = matchJson[MatchAttributes.halfTime];
+    match.extraTime = matchJson[MatchAttributes.extraTime];
+    match.penalties = matchJson[MatchAttributes.penalties];
+    match.referees = matchJson[MatchAttributes.referees];
+    match.utcDate = matchJson[MatchAttributes.utcDate];
+    match.matchDay = matchJson[MatchAttributes.matchDay];
+    match.homeTeam = Team.fromJson(matchJson[MatchAttributes.homeTeam]);
+    match.awayTeam = Team.fromJson(matchJson[MatchAttributes.awayTeam]);
     return match;
   }
 }

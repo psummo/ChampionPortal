@@ -19,13 +19,13 @@ export class Squad {
 
   static fromJson(squadJson: any): Squad {
     const squad = new Squad();
-    squad.id = squadJson[' id '];
-    squad.name = squadJson[' name '];
-    squad.position = squadJson[' position '];
-    squad.nationality = squadJson[' nationality '];
-    squad.shirtNumb = squadJson[' shirtNumb '];
-    squad.role = squadJson[' role '];
-    squad.countryOfBirth = squadJson[' countryOfBirth '];
+    squad.id = squadJson[SquadAttributes.id];
+    squad.name = squadJson[SquadAttributes.name];
+    squad.position = squadJson[SquadAttributes.position];
+    squad.nationality = squadJson[SquadAttributes.nationality];
+    squad.shirtNumb = squadJson[SquadAttributes.shirtNumb];
+    squad.role = squadJson[SquadAttributes.role];
+    squad.countryOfBirth = squadJson[SquadAttributes.countryOfBirth];
     return squad;
   }
 }

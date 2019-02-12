@@ -1,3 +1,6 @@
+import {Squad} from './squad';
+import {Competition} from './competition';
+
 enum TeamAttributes {
   id = 'id',
   activeCompetition = 'activeCompetition',
@@ -9,20 +12,20 @@ enum TeamAttributes {
 
 export class Team {
   id: number;
-  activeCompetition: string;
+  activeCompetition: Competition;
   name: string;
   tla: string;
   crestUrl: string;
-  squad: string;
+  squad: Squad;
 
   static fromJson(teamJson: any): Team {
     const team = new Team();
-    team.id = teamJson[' id '];
-    team.activeCompetition = teamJson[' activeCompetition '];
-    team.name = teamJson[' name '];
-    team.tla = teamJson[' tla '];
-    team.crestUrl = teamJson[' crestUrl '];
-    team.squad = teamJson[' squad '];
+    team.id = teamJson[TeamAttributes.id];
+    team.activeCompetition = teamJson[teamJson[TeamAttributes.activeCompetition]];
+    team.name = teamJson[TeamAttributes.name];
+    team.tla = teamJson[TeamAttributes.tla];
+    team.crestUrl = teamJson[TeamAttributes.crestUrl];
+    team.squad = Squad.fromJson(teamJson[TeamAttributes.squad]);
     return team;
   }
 }

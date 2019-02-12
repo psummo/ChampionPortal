@@ -15,11 +15,11 @@ export class Player {
 
   static fromJson(playerJson: any): Player {
     const player = new Player();
-    player.id = playerJson[' id '];
-    player.name = playerJson[' name '];
-    player.position = playerJson[' position '];
-    player.nationality = playerJson[' nationality '];
-    player.shirtNumb = playerJson[' shirtNumb '];
+    player.id = playerJson[PlayerAttributes.id];
+    player.name = playerJson[PlayerAttributes.name];
+    player.position = playerJson[PlayerAttributes.position];
+    player.nationality = playerJson[PlayerAttributes.nationality];
+    player.shirtNumb = playerJson[PlayerAttributes.shirtNumb];
     return player;
   }
 }

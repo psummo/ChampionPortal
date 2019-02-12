@@ -9,8 +9,8 @@ export class Area {
 
   static fromJson(areaJson: any): Area {
     const area = new Area();
-    area.id = areaJson[' id '];
-    area.name = areaJson[' name '];
+    area.id = areaJson[AreaAttributes.id];
+    area.name = areaJson[AreaAttributes.name];
     return area;
   }
 }
