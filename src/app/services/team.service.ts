@@ -34,7 +34,7 @@ export class TeamService {
       );
   }
 
-  // GET ALL INFO ABOUT TEAM ON STARTUP
+  // GET PARTIAL INFO ABOUT TEAMs ON STARTUP
   getAllTeam(): Observable<Team[]> {
     const url = 'https://api.football-data.org/v2/competitions/SA/teams';
     return this.http.get(url, this.headers)
@@ -42,6 +42,7 @@ export class TeamService {
           map( (response: any[]) => {
              return response['teams'].map((teamJson) => {
                const teamTmp = Team.fromJson(teamJson);
+               console.log('CHIAMATA TEAM');
                // CACHE SOME INFO OF TEAMs
                TeamService.teamCache.push(teamJson);
                return teamTmp;

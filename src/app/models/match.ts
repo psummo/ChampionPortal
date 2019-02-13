@@ -1,4 +1,5 @@
 import {Team} from './team';
+import {TeamService} from '../services/team.service';
 
 enum MatchAttributes {
   id = 'id',
@@ -43,17 +44,27 @@ export class Match {
     match.penalties.push(
       matchJson[MatchAttributes.score][MatchAttributes.penalties][MatchAttributes.homeTeam],
       matchJson[MatchAttributes.score][MatchAttributes.penalties][MatchAttributes.awayTeam]);
-    for(let i = 0; i < matchJson[MatchAttributes.referees].length; i++) {
+    for (let i; i < matchJson[MatchAttributes.referees].lenght; i++) {
       match.referees.push(matchJson[MatchAttributes.referees][i][MatchAttributes.name]);
     }
     match.utcDate = matchJson[MatchAttributes.utcDate];
     match.matchDay = matchJson[MatchAttributes.matchDay];
-    match.homeTeam = Team.fromJson(matchJson[MatchAttributes.homeTeam]);
-    match.awayTeam = Team.fromJson(matchJson[MatchAttributes.awayTeam]);
+    match.homeTeam = match.retrieveTeam(matchJson[MatchAttributes.homeTeam][MatchAttributes.id]);
+    match.awayTeam = match.retrieveTeam(matchJson[MatchAttributes.awayTeam][MatchAttributes.id]);
     // posizione 0 => in casa; posizione 1 =>trasferta
     match.fullTime.push(
       matchJson[MatchAttributes.score][MatchAttributes.fullTime][MatchAttributes.homeTeam],
       matchJson[MatchAttributes.score][MatchAttributes.fullTime][MatchAttributes.awayTeam]);
     return match;
+  }
+
+  retrieveTeam(id: number): Team {
+    console.log(id);
+    for (let team of TeamService.teamCache) {
+      if (team.id === id) {
+        return team;
+      } else {
+      }
+    }
   }
 }

@@ -19,6 +19,8 @@ export class MatchService {
       .pipe(
         map(
           (response: any[]) => {
+            console.log('CHIAMATA GIORNATE');
+
             return response['matches'].map(matchJson => Match.fromJson(matchJson));
           }
         )

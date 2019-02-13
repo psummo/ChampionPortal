@@ -26,7 +26,6 @@ export class Team {
 
   static fromJson(teamJson: any): Team {
     const team = new Team();
-    console.log(teamJson);
     try {
     team.id = teamJson[TeamAttributes.id];
     team.name = teamJson[TeamAttributes.name];
