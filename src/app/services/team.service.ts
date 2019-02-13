@@ -11,17 +11,41 @@ export class TeamService {
 
   static teamCache: Team[] = [];
   headers = { headers: new HttpHeaders({'X-Auth-Token': '7b5abcb291ec4fd194fe07b26b80936d' })};
+
   constructor(private http: HttpClient) { }
 
+  // GET INFO ABOUT A SINGLE TEAM
   getTeamById(idTeam: number): Observable<Team> {
-    const url = 'https://api.football-data.org/v2/competitions/SA/matches?season=2018';
+    const url = `https://api.football-data.org/v2/teams/${idTeam}`;
     return this.http.get(url, this.headers)
       .pipe(
         map( (response: any) => {
-          const tmpTemp = Team.fromJson(response);
-          /*CACHE TEAM INFO FOR NEXT SAME REQUEST*/
-          TeamService.teamCache.push(tmpTemp);
-          return tmpTemp;
+            // RETRIVE TEAM TO ADD INFORMATION
+            for (const team of TeamService.teamCache) {
+              if (team.id === idTeam) {
+                team.squad = Team.addSquad(response['squad']);
+                team.activeCompetition = Team.addCompetitions(response['activeCompetitions']);
+              }
+            }
+            const tmpTemp = Team.fromJson(response);
+            return tmpTemp;
+          }
+        )
+      );
+  }
+
+  // GET ALL INFO ABOUT TEAM ON STARTUP
+  getAllTeam(): Observable<Team[]> {
+    const url = 'https://api.football-data.org/v2/competitions/SA/teams';
+    return this.http.get(url, this.headers)
+      .pipe(
+          map( (response: any[]) => {
+             return response['teams'].map((teamJson) => {
+               const teamTmp = Team.fromJson(teamJson);
+               // CACHE SOME INFO OF TEAMs
+               TeamService.teamCache.push(teamJson);
+               return teamTmp;
+             });
           }
         )
       );

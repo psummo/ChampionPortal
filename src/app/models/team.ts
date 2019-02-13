@@ -2,6 +2,9 @@ import {Player} from './player';
 import {Competition} from './competition';
 
 enum TeamAttributes {
+  venue = 'venue',
+  founded = 'founded',
+  website = 'website',
   id = 'id',
   activeCompetition = 'activeCompetition',
   name = 'name',
@@ -12,25 +15,45 @@ enum TeamAttributes {
 
 export class Team {
   id: number;
-  activeCompetition: Competition;
+  activeCompetition: Competition[] = [];
   name: string;
   tla: string;
   crestUrl: string;
+  website: string;
+  founded: number;
+  venue: string;
   squad: Player[] = [];
 
   static fromJson(teamJson: any): Team {
     const team = new Team();
-    console.log("TEAM");
+    console.log(teamJson);
+    try {
     team.id = teamJson[TeamAttributes.id];
     team.name = teamJson[TeamAttributes.name];
-    try {
-    team.activeCompetition = teamJson[teamJson[TeamAttributes.activeCompetition]];
     team.tla = teamJson[TeamAttributes.tla];
+    team.website = teamJson[TeamAttributes.website];
+    team.founded = teamJson[TeamAttributes.founded];
+    team.venue = teamJson[TeamAttributes.venue];
     team.crestUrl = teamJson[TeamAttributes.crestUrl];
-    for (let i = 0; i < teamJson[TeamAttributes.squad].lenght; i++) {
-      team.squad.push(Player.fromJson(teamJson[TeamAttributes.squad][i]));
+  } catch (e) {
+      console.log();
     }
-  } catch (e) {}
     return team;
+  }
+
+  static addSquad(infoTeamJson: any): Player[] {
+    const players: Player[] = [];
+    for (const player of infoTeamJson[TeamAttributes.squad]) {
+      players.push(Player.fromJson(infoTeamJson[TeamAttributes.squad][player]));
+    }
+    return players;
+  }
+  static addCompetitions(infoTeamJson: any): Competition[] {
+    const competitions: Competition[] = [];
+
+    for (const competition of infoTeamJson[TeamAttributes.activeCompetition]) {
+      competitions.push(Competition.fromJson(infoTeamJson[TeamAttributes.activeCompetition][competition]));
+    }
+    return competitions;
   }
 }

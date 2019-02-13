@@ -1,4 +1,5 @@
 enum SquadAttributes {
+  dateOfBirth = 'dateOfBirth',
   id = 'id',
   name = 'name',
   position = 'position',
@@ -16,6 +17,7 @@ export class Player {
   shirtNumb: number;
   role: string;
   countryOfBirth: string;
+  dateOfBirth: string;
 
   static fromJson(squadJson: any): Player {
     const squad = new Player();
@@ -26,6 +28,7 @@ export class Player {
     squad.shirtNumb = squadJson[SquadAttributes.shirtNumb];
     squad.role = squadJson[SquadAttributes.role];
     squad.countryOfBirth = squadJson[SquadAttributes.countryOfBirth];
+    squad.dateOfBirth = squadJson[SquadAttributes.dateOfBirth];
     return squad;
   }
 }
