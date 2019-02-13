@@ -1,4 +1,7 @@
 <h1>SERIE A</h1>
 <ul>
-  <li *ngFor="let match of matchList">{{match.utcDate}} - {{match.id}} => {{match.homeTeam.name}} VS {{match.awayTeam.name}}</li>
+  <li *ngFor="let match of matchList">
+    <p> Giornata {{match.matchDay}} - {{match.utcDate | date}}</p>
+    <p>{{match.homeTeam.crestUrl}}{{match.homeTeam.name}} - {{match.awayTeam.name}}{{match.homeTeam.crestUrl}} {{match.fullTime[0]}} - {{match.fullTime[1]}}</p>
+  </li>
 </ul>
