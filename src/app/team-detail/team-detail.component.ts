@@ -10,6 +10,7 @@ export class TeamDetailComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

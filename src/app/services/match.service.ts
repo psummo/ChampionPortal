@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Match} from '../models/match';
 import {map} from 'rxjs/operators';
 import {Team} from '../models/team';
@@ -33,14 +33,12 @@ export class MatchService {
           )
         );
     } else {
-      MatchService.matchCache.map((match) => {
-        return match;
-      } );
+      return of(MatchService.matchCache);
     }
   }
 
   getMatchById(idMatch: number): Observable<Match> {
-    const url = `http://staging-api.football-data.org/v2/matches/${idMatch}`;
+    const url = `http://api.football-data.org/v2/matches/${idMatch}`;
     return this.http.get(url, this.headers)
       .pipe(
         map(

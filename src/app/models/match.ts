@@ -35,7 +35,6 @@ export class Match {
     match.halfTime = [];
     match.penalties = [];
     match.referees = [];
-    console.log(matchJson);
     match.id = matchJson[MatchAttributes.id];
     match.halfTime.push(matchJson[MatchAttributes.score][MatchAttributes.halfTime][MatchAttributes.homeTeam],
       matchJson[MatchAttributes.score][MatchAttributes.halfTime][MatchAttributes.awayTeam]);
@@ -59,7 +58,6 @@ export class Match {
   }
 
   retrieveTeam(id: number): Team {
-    console.log(id);
     for (let team of TeamService.teamCache) {
       if (team.id === id) {
         return team;
