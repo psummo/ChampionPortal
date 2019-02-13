@@ -18,14 +18,20 @@ export class MatchListComponent implements OnInit {
   constructor(private matchService: MatchService, private teamService: TeamService) {}
 
     ngOnInit() {
-    this.teamService.getAllTeam().subscribe((success) => {
-      this.matchService.getMatchList().subscribe( (response) => {
-          this.matchList = response;
-        }, (error1 => {
-          console.log(error1);
-        })
-      );
-      this.teamList = success;
-    });
-  }
+      if (TeamService.teamCache.length === 0) {
+        this.teamService.getAllTeam().subscribe((success) => {
+          this.matchService.getMatchList().subscribe((response) => {
+              this.matchList = response;
+            }, (error1 => {
+              console.log(error1);
+            })
+          );
+          this.teamList = success;
+        });
+      } else {
+        this.teamList = TeamService.teamCache;
+        this.matchList = MatchService.matchCache;
+        console.log(this.matchList.length);
+      }
+    }
 }

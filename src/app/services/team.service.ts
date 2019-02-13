@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Team} from '../models/team';
-import {Observable} from 'rxjs';
+import {ObjectUnsubscribedError, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -36,19 +36,25 @@ export class TeamService {
 
   // GET PARTIAL INFO ABOUT TEAMs ON STARTUP
   getAllTeam(): Observable<Team[]> {
-    const url = 'https://api.football-data.org/v2/competitions/SA/teams';
-    return this.http.get(url, this.headers)
-      .pipe(
-          map( (response: any[]) => {
-             return response['teams'].map((teamJson) => {
-               const teamTmp = Team.fromJson(teamJson);
-               console.log('CHIAMATA TEAM');
-               // CACHE SOME INFO OF TEAMs
-               TeamService.teamCache.push(teamJson);
-               return teamTmp;
-             });
-          }
-        )
-      );
+    if (TeamService.teamCache.length === 0) {
+      const url = 'https://api.football-data.org/v2/competitions/SA/teams';
+      return this.http.get(url, this.headers)
+        .pipe(
+          map((response: any[]) => {
+              return response['teams'].map((teamJson) => {
+                const teamTmp = Team.fromJson(teamJson);
+                // CACHE SOME INFO OF TEAMs
+                TeamService.teamCache.push(teamJson);
+                return teamTmp;
+              });
+            }
+          )
+        );
+    } else {
+      console.log("TEAM CACHE");
+      TeamService.teamCache.map((team) => {
+        return team;
+      });
+    }
   }
 }
