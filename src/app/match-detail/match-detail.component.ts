@@ -1,3 +1,9 @@
+import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {TeamService} from '../services/team.service';
+import {Team} from '../models/team';
+import {MatchService} from '../services/match.service';
+import {Match} from '../models/match';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MatchService} from '../services/match.service';

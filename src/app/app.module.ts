@@ -7,6 +7,8 @@ import {Route, RouterModule, Routes} from '@angular/router';
 import { MatchListComponent } from './match-list/match-list.component';
 import { MatchDetailComponent } from './match-detail/match-detail.component';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 const appRoutes: Routes = [
   {path: '',  component: MatchListComponent},
@@ -24,6 +26,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    NgbModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],

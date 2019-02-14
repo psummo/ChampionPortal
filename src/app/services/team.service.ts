@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Team} from '../models/team';
-import {ObjectUnsubscribedError, Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -17,21 +17,45 @@ export class TeamService {
   // GET INFO ABOUT A SINGLE TEAM
   getTeamById(idTeam: number): Observable<Team> {
     const url = `https://api.football-data.org/v2/teams/${idTeam}`;
-    return this.http.get(url, this.headers)
-      .pipe(
-        map( (response: any) => {
-            // RETRIVE TEAM TO ADD INFORMATION
-            for (const team of TeamService.teamCache) {
-              if (team.id === idTeam) {
-                team.squad = Team.addSquad(response['squad']);
-                team.activeCompetition = Team.addCompetitions(response['activeCompetitions']);
-              }
+    let retrieveOtherInfo = true;
+    let retrieveAllInfo = true;
+    let retrieveTeam: Team = null;
+    // CHECK IF THERE ARE ALREADY INFO ABOUT TEAM IN ARRAY/CACHE
+    if (TeamService.teamCache.length !== 0) {
+      for (const team of TeamService.teamCache) {
+        if (team.id === idTeam && team.squad.length > 0) {
+          retrieveAllInfo = false;
+          retrieveOtherInfo = false;
+          retrieveTeam = team;
+          return;
+        } else if (team.id === idTeam && team.squad.length === 0) {
+          retrieveAllInfo = false;
+          retrieveTeam = team;
+          return;
+        }
+      }
+    }
+    if (retrieveAllInfo || retrieveOtherInfo) {
+      return this.http.get(url, this.headers)
+        .pipe(
+          map((response: any) => {
+                if (retrieveAllInfo) {
+                  const tmpTeam = Team.fromJson(response);
+                  tmpTeam.squad = Team.addSquad(response['squad']);
+                  tmpTeam.activeCompetition = Team.addCompetitions(response['activeCompetitions']);
+                  TeamService.teamCache.push(tmpTeam);
+                }
+              // RETRIVE TEAM TO ADD INFORMATION
+                if (retrieveOtherInfo && !retrieveAllInfo) {
+                  const index = TeamService.teamCache.indexOf(retrieveTeam);
+                  TeamService.teamCache[index].squad = Team.addSquad(response['squad']);
+                  TeamService.teamCache[index].activeCompetition = Team.addCompetitions(response['activeCompetitions']);
+                  return TeamService.teamCache[index];
+                }
             }
-            const tmpTemp = Team.fromJson(response);
-            return tmpTemp;
-          }
-        )
-      );
+          )
+        );
+    }
   }
 
   // GET PARTIAL INFO ABOUT TEAMs ON STARTUP
@@ -44,17 +68,14 @@ export class TeamService {
               return response['teams'].map((teamJson) => {
                 const teamTmp = Team.fromJson(teamJson);
                 // CACHE SOME INFO OF TEAMs
-                TeamService.teamCache.push(teamJson);
+                TeamService.teamCache.push(teamTmp);
                 return teamTmp;
               });
             }
           )
         );
     } else {
-      console.log("TEAM CACHE");
-      TeamService.teamCache.map((team) => {
-        return team;
-      });
+      return of(TeamService.teamCache);
     }
   }
 }

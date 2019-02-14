@@ -69,7 +69,6 @@ export class Match {
   }
 
   retrieveTeam(id: number): Team {
-    console.log(id);
     for (let team of TeamService.teamCache) {
       if (team.id === id) {
         return team;
