@@ -1,3 +1,9 @@
-<p>
-  match-detail works!
-</p>
+<h1>Dettagli <img class="logo-team" src="{{matchSelected.homeTeam.crestUrl}}">{{matchSelected.homeTeam.name}} - {{matchSelected.awayTeam.name}}
+  <img class="logo-team" src="{{matchSelected.awayTeam.crestUrl}}"></h1>
+<p> Data: {{matchSelected.utcDate}}</p>
+<p> {{matchSelected.status}}</p>
+<p>Risultato parziale: {{matchSelected.halfTime[0]}}-{{matchSelected.halfTime[1]}}</p>
+<p>Risultato finale: {{matchSelected.fullTime[0]}}-{{matchSelected.fullTime[1]}}</p>
+<p>Arbitro: {{matchSelected.referees[0]}}</p>
+<p>Assistenti: {{matchSelected.referees[1]}}-{{matchSelected.referees[2]}}-{{matchSelected.referees[3]}}-{{matchSelected.referees[4]}}</p>
+<p>Stadio: {{matchSelected.venue}}</p>

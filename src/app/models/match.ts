@@ -13,10 +13,14 @@ enum MatchAttributes {
   homeTeam = 'homeTeam',
   awayTeam = 'awayTeam',
   name = 'name',
-  score = 'score'
+  score = 'score',
+  venue = 'venue',
+  status = 'status',
+  length = 'length'
 }
 
 export class Match {
+  static  i: number;
   id: number;
   fullTime: number[];
   halfTime: number[];
@@ -24,9 +28,11 @@ export class Match {
   penalties: string[];
   referees: string[];
   utcDate: string;
-  matchDay: string;
+  matchDay: number;
   homeTeam: Team;
   awayTeam: Team;
+  venue: string;
+  status: string;
 
   static fromJson(matchJson: any): Match {
     const match = new Match();
@@ -35,19 +41,23 @@ export class Match {
     match.halfTime = [];
     match.penalties = [];
     match.referees = [];
-    console.log(matchJson);
     match.id = matchJson[MatchAttributes.id];
+    // posizione 0 => in casa; posizione 1 =>trasferta
     match.halfTime.push(matchJson[MatchAttributes.score][MatchAttributes.halfTime][MatchAttributes.homeTeam],
       matchJson[MatchAttributes.score][MatchAttributes.halfTime][MatchAttributes.awayTeam]);
+    // posizione 0 => in casa; posizione 1 =>trasferta
     match.extraTime.push(matchJson[MatchAttributes.score][MatchAttributes.extraTime][MatchAttributes.homeTeam],
       matchJson[MatchAttributes.score][MatchAttributes.extraTime][MatchAttributes.awayTeam]);
+    // posizione 0 => in casa; posizione 1 =>trasferta
     match.penalties.push(
       matchJson[MatchAttributes.score][MatchAttributes.penalties][MatchAttributes.homeTeam],
       matchJson[MatchAttributes.score][MatchAttributes.penalties][MatchAttributes.awayTeam]);
-    for (let i; i < matchJson[MatchAttributes.referees].lenght; i++) {
+    for ( let i = 0 ; i < matchJson[MatchAttributes.referees][MatchAttributes.length]; i++) {
       match.referees.push(matchJson[MatchAttributes.referees][i][MatchAttributes.name]);
     }
     match.utcDate = matchJson[MatchAttributes.utcDate];
+    match.venue = matchJson[MatchAttributes.venue];
+    match.status = matchJson[MatchAttributes.status];
     match.matchDay = matchJson[MatchAttributes.matchDay];
     match.homeTeam = match.retrieveTeam(matchJson[MatchAttributes.homeTeam][MatchAttributes.id]);
     match.awayTeam = match.retrieveTeam(matchJson[MatchAttributes.awayTeam][MatchAttributes.id]);

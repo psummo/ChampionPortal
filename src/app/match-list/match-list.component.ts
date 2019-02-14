@@ -31,7 +31,6 @@ export class MatchListComponent implements OnInit {
       } else {
         this.teamList = TeamService.teamCache;
         this.matchList = MatchService.matchCache;
-        console.log(this.matchList.length);
       }
     }
 }

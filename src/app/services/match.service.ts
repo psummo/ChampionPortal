@@ -40,11 +40,14 @@ export class MatchService {
   }
 
   getMatchById(idMatch: number): Observable<Match> {
-    const url = `http://staging-api.football-data.org/v2/matches/${idMatch}`;
+    const url = `http://api.football-data.org/v2/matches/${idMatch}`;
+    const url2 = `http://staging-api.football-data.org/v2/matches/247791`;
     return this.http.get(url, this.headers)
       .pipe(
         map(
-          (response: any) => { return Match.fromJson(response);
+          (response: any) => {
+            console.log('respone getMatchById', response['match']);
+            return Match.fromJson(response['match']);
           }
         )
       );
