@@ -28,6 +28,7 @@ export class MatchDetailComponent implements OnInit {
     });
     this.matchService.getMatchById(this.matchId).subscribe((response) => {
         this.matchSelected = response;
+        console.log('faccio getMatchById', this.matchSelected);
       }, (error1 => {
          console.log(error1);
       })

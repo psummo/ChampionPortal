@@ -44,7 +44,9 @@ export class MatchService {
     return this.http.get(url, this.headers)
       .pipe(
         map(
-          (response: any) => { return Match.fromJson(response);
+          (response: any) => {
+            console.log('sono in getMatchByid', response);
+            return Match.fromJson(response['match']);
           }
         )
       );
