@@ -68,7 +68,7 @@ export class TeamService {
               return response['teams'].map((teamJson) => {
                 const teamTmp = Team.fromJson(teamJson);
                 // CACHE SOME INFO OF TEAMs
-                TeamService.teamCache.push(teamJson);
+                TeamService.teamCache.push(teamTmp);
                 return teamTmp;
               });
             }

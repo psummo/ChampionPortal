@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TeamService} from '../services/team.service';
+import {Team} from '../models/team';
+import {MatchService} from '../services/match.service';
+import {Match} from '../models/match';
 
 @Component({
   selector: 'app-match-detail',
@@ -9,20 +12,16 @@ import {TeamService} from '../services/team.service';
 })
 export class MatchDetailComponent implements OnInit {
 
-  idTeam: number
-  constructor(private route: ActivatedRoute, private teamService: TeamService) { }
+  idTeam: number;
+  matchSelected: Match;
+  constructor(private route: ActivatedRoute, private matchService: MatchService) { }
 
   ngOnInit() {
     this.route.paramMap
       .subscribe(paramMap => {
         this.idTeam = +paramMap.get('id');
       });
-    if (TeamService.teamCache.length !== 0) {
-        //TODO EFFETTUA LA RICHIESTA
-    } else {
-      //TODO VERIFICA CHE CI SONO TUTTI I DATI DEL TEAM
-
-    }
+    this.matchService.getMatchById(this.idTeam).subscribe((response) => this.matchSelected = response);
   }
 
 }

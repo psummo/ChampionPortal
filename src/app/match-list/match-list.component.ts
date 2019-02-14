@@ -19,7 +19,7 @@ export class MatchListComponent implements OnInit {
     ngOnInit() {
         this.teamService.getAllTeam().subscribe((success) => {
           this.matchService.getMatchList().subscribe((response) => {
-              this.matchList = response;
+            this.matchList = response;
             }, (error1 => {
               console.log(error1);
             })

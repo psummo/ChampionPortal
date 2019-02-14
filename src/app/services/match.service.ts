@@ -24,6 +24,8 @@ export class MatchService {
           map(
             (response: any[]) => {
               return response['matches'].map((matchJson) => {
+                console.log(response);
+
                 const matchTmp = Match.fromJson(matchJson);
                 // CACHE SOME INFO OF TEAMs
                 MatchService.matchCache.push(matchTmp);
