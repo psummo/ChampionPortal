@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Team} from '../models/team';
 import {Observable, of} from 'rxjs';
@@ -10,9 +10,10 @@ import {map} from 'rxjs/operators';
 export class TeamService {
 
   static teamCache: Team[] = [];
-  headers = { headers: new HttpHeaders({'X-Auth-Token': '7b5abcb291ec4fd194fe07b26b80936d' })};
+  headers = {headers: new HttpHeaders({'X-Auth-Token': '7b5abcb291ec4fd194fe07b26b80936d'})};
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   // GET INFO ABOUT A SINGLE TEAM
   getTeamById(idTeam: number): Observable<Team> {
@@ -39,19 +40,19 @@ export class TeamService {
       return this.http.get(url, this.headers)
         .pipe(
           map((response: any) => {
-                if (retrieveAllInfo) {
-                  const tmpTeam = Team.fromJson(response);
-                  tmpTeam.squad = Team.addSquad(response['squad']);
-                  tmpTeam.activeCompetition = Team.addCompetitions(response['activeCompetitions']);
-                  TeamService.teamCache.push(tmpTeam);
-                }
-              // RETRIVE TEAM TO ADD INFORMATION
-                if (retrieveOtherInfo && !retrieveAllInfo) {
-                  const index = TeamService.teamCache.indexOf(retrieveTeam);
-                  TeamService.teamCache[index].squad = Team.addSquad(response['squad']);
-                  TeamService.teamCache[index].activeCompetition = Team.addCompetitions(response['activeCompetitions']);
-                  return TeamService.teamCache[index];
-                }
+
+              if (retrieveAllInfo) {
+                const tmpTeam = Team.fromJson(response);
+                tmpTeam.squad = Team.addSquad(response['squad']);
+                tmpTeam.activeCompetition = Team.addCompetitions(response['activeCompetitions']);
+                TeamService.teamCache.push(tmpTeam);
+                return tmpTeam;
+              } else if (retrieveOtherInfo && !retrieveAllInfo) {
+                const index = TeamService.teamCache.indexOf(retrieveTeam);
+                TeamService.teamCache[index].squad = Team.addSquad(response['squad']);
+                TeamService.teamCache[index].activeCompetition = Team.addCompetitions(response['activeCompetitions']);
+                return TeamService.teamCache[index];
+              }
             }
           )
         );

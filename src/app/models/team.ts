@@ -42,16 +42,15 @@ export class Team {
 
   static addSquad(infoTeamJson: any): Player[] {
     const players: Player[] = [];
-    for (const player of infoTeamJson[TeamAttributes.squad]) {
-      players.push(Player.fromJson(infoTeamJson[TeamAttributes.squad][player]));
+    for (const player of infoTeamJson) {
+      players.push(Player.fromJson(player));
     }
     return players;
   }
   static addCompetitions(infoTeamJson: any): Competition[] {
     const competitions: Competition[] = [];
-
-    for (const competition of infoTeamJson[TeamAttributes.activeCompetition]) {
-      competitions.push(Competition.fromJson(infoTeamJson[TeamAttributes.activeCompetition][competition]));
+    for (const competition of infoTeamJson) {
+      competitions.push(Competition.fromJson(competition));
     }
     return competitions;
   }

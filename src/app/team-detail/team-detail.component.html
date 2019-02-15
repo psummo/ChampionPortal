@@ -1,3 +1,17 @@
-<p>
-  team-detail works!
-</p>
+<div *ngIf="teamSelected">
+  <img src="{{teamSelected.crestUrl}}" style="width: 100px; height: 100px">
+  <h1>{{teamSelected.name}}</h1>
+</div>
+
+<div>
+  <ul>
+    <li *ngFor="let player of teamSelected.squad">
+      {{player.name}}
+      {{player.position}}
+      <span class="span-shirt">
+        <p>{{player.shirtNumb}}</p>
+      </span>
+    </li>
+  </ul>
+</div>
+

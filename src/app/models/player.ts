@@ -4,7 +4,7 @@ enum SquadAttributes {
   name = 'name',
   position = 'position',
   nationality = 'nationality',
-  shirtNumb = 'shirtNumb',
+  shirtNumber = 'shirtNumber',
   role = 'role',
   countryOfBirth = 'countryOfBirth'
 }
@@ -25,7 +25,7 @@ export class Player {
     squad.name = squadJson[SquadAttributes.name];
     squad.position = squadJson[SquadAttributes.position];
     squad.nationality = squadJson[SquadAttributes.nationality];
-    squad.shirtNumb = squadJson[SquadAttributes.shirtNumb];
+    squad.shirtNumb = squadJson[SquadAttributes.shirtNumber];
     squad.role = squadJson[SquadAttributes.role];
     squad.countryOfBirth = squadJson[SquadAttributes.countryOfBirth];
     squad.dateOfBirth = squadJson[SquadAttributes.dateOfBirth];

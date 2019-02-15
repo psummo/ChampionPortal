@@ -1,0 +1,21 @@
+.span-shirt{
+  background: url("../../assets/images/shirt.svg") no-repeat;
+  display:inline-flex;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: middle;
+
+}
+
+.span-shirt > p {
+  color: red;
+  margin: auto;
+}
+
+li{
+  height: 50px;
+  font-size: 20px;
+  vertical-align: center;
+}

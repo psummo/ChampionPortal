@@ -17,7 +17,10 @@ export class TeamDetailComponent implements OnInit {
   ngOnInit() {
     try {
       this.root.paramMap.subscribe((param) => this.id = +param.get('id'));
-      this.teamService.getTeamById(this.id).subscribe((response) => this.teamSelected = response);
+      this.teamService.getTeamById(this.id).subscribe((response) => {
+        console.log(response.squad[1].shirtNumb);
+        this.teamSelected = response;
+      });
     } catch (e) {
       console.log('indirizzo errato');
     }
