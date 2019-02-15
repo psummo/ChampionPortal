@@ -1,9 +1,14 @@
-<h1>Dettagli <img class="logo-team" src="{{matchSelected.homeTeam.crestUrl}}">{{matchSelected.homeTeam.name}} - {{matchSelected.awayTeam.name}}
+<h1 >Dettagli <img class="logo-team" src="{{matchSelected.homeTeam.crestUrl}}">{{matchSelected.homeTeam.name}} - {{matchSelected.awayTeam.name}}
   <img class="logo-team" src="{{matchSelected.awayTeam.crestUrl}}"></h1>
-<p> Data: {{matchSelected.utcDate}}</p>
-<p> {{matchSelected.status}}</p>
-<p>Risultato parziale: {{matchSelected.halfTime[0]}}-{{matchSelected.halfTime[1]}}</p>
-<p>Risultato finale: {{matchSelected.fullTime[0]}}-{{matchSelected.fullTime[1]}}</p>
-<p>Arbitro: {{matchSelected.referees[0]}}</p>
-<p>Assistenti: {{matchSelected.referees[1]}}-{{matchSelected.referees[2]}}-{{matchSelected.referees[3]}}-{{matchSelected.referees[4]}}</p>
-<p>Stadio: {{matchSelected.venue}}</p>
+
+
+<ul class="list-group">
+  <li class="list-group-item active">Data: {{matchSelected.utcDate}}</li>
+  <li class="list-group-item">{{matchSelected.status}}</li>
+  <li class="list-group-item">Risultato parziale: {{matchSelected.halfTime[0]}}-{{matchSelected.halfTime[1]}}</li>
+  <li class="list-group-item">Risultato finale: {{matchSelected.fullTime[0]}}-{{matchSelected.fullTime[1]}}</li>
+  <li class="list-group-item">VArbitro: {{matchSelected.referees[0]}}</li>
+  <li class="list-group-item">Assistenti: {{matchSelected.referees[1]}}-{{matchSelected.referees[2]}}-{{matchSelected.referees[3]}}-{{matchSelected.referees[4]}}</li>
+  <li class="list-group-item">Stadio: {{matchSelected.venue}}</li>
+
+</ul>
