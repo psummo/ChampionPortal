@@ -9,6 +9,7 @@ import {Team} from '../models/team';
   templateUrl: './match-list.component.html',
   styleUrls: ['./match-list.component.css']
 })
+
 export class MatchListComponent implements OnInit {
 
   matchList: Match[] = [];
@@ -28,4 +29,3 @@ export class MatchListComponent implements OnInit {
         });
       }
     }
-
