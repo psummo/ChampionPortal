@@ -1,0 +1,11 @@
+h1{
+  cursor: pointer;
+}
+
+.home-container{
+  display: inline;
+}
+
+.away-container{
+  display: inline;
+}

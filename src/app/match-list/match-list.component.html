@@ -23,7 +23,7 @@
       <div [attr.id]="'collapseId'+dayMatch.key" [classList]="'collapse'" [attr.aria-labelledby]="'head'+dayMatch.key"
            data-parent="#accordion">
         <div class="card-body">
-          <div *ngFor="let match of dayMatch.value" class="row" >
+          <div *ngFor="let match of dayMatch.value" class="row" [routerLink]="['/match',match.id]">
 
             <div class="col-md-1 offset-2"><img src="{{match.homeTeam.crestUrl}}"></div>
             <div class="col-md-2">{{match.homeTeam.name}}</div>

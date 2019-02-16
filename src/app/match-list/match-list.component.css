@@ -20,3 +20,7 @@
 .card{
   text-align: center;
 }
+
+.card-body{
+  cursor: pointer;
+}
