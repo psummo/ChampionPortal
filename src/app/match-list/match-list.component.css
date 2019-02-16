@@ -1,4 +1,22 @@
-.row >div  {
-  height: 80px;
-  border-style: solid;
+.row >div > img  {
+  width: 50px;
+  height: 50px
+}
+
+.row{
+  margin: 10px;
+  font-size: 18px;
+}
+
+.row > div {
+  line-height: 50px;
+  }
+.row > div > h4 {
+  text-align: center;
+  line-height: 50px;
+
+}
+
+.card{
+  text-align: center;
 }

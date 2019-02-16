@@ -1,35 +1,39 @@
-<h1>SERIE A</h1>
-<!--
-<ul>
-  <li *ngFor="let match of matchList" [routerLink]="['/match',match.id]">
-    <p> Giornata {{match.matchDay}} - {{match.utcDate | date}}</p>
-    <p><img class="logo-team" src="{{match.homeTeam.crestUrl}}"> {{match.homeTeam.name}} - {{match.awayTeam.name}} <img class="logo-team" src="{{match.awayTeam.crestUrl}}"> {{match.fullTime[0]}} - {{match.fullTime[1]}}</p>
-  </li>
-</ul> -->
-
-
-<div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0" *ngFor="let match of matchList" [routerLink]="['/match',match.id]">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Giornata {{match.matchDay}} - {{match.utcDate | date}}
-        </button>
-      </h5>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-4">
+      <img src="../../assets/images/logo-seriea.svg">
     </div>
+    <div class="col-xs-8">
+      <h1>SERIE A</h1>
+    </div>
+  </div>
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-2">stemma home</div>
-          <div class="col-md-3">squadra casa</div>
-          <div class="col-md-1"> VS </div>
-          <div class="col-md-3">squadra ospite</div>
-          <div class="col-md-2">stemma ospite</div>
-          <div class="col-md-1">risultato</div>
+
+  <div id="accordion">
+    <div class="card" *ngFor="let dayMatch of matchDayMap | keyvalue">
+      <div class="card-header" [attr.id]="'head'+dayMatch.key">
+        <h4 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#collapseId'+dayMatch.key"
+                  [attr.aria-expanded]="false" [attr.aria-controls]="'collapseId'+dayMatch.key">
+            Giornata {{dayMatch.key}} a partire da {{dayMatch.value[0].utcDate | date:'d MMMM  y ore H:mm'}}
+          </button>
+        </h4>
+      </div>
+
+      <div [attr.id]="'collapseId'+dayMatch.key" [classList]="'collapse'" [attr.aria-labelledby]="'head'+dayMatch.key"
+           data-parent="#accordion">
+        <div class="card-body">
+          <div *ngFor="let match of dayMatch.value" class="row" >
+
+            <div class="col-md-1 offset-2"><img src="{{match.homeTeam.crestUrl}}"></div>
+            <div class="col-md-2">{{match.homeTeam.name}}</div>
+            <div class="col-md-1"><h4>{{match.fullTime[0]}}</h4></div>
+            <div class="col-md-1"><h4>{{match.fullTime[1]}}</h4></div>
+            <div class="col-md-2">{{match.awayTeam.name}}</div>
+            <div class="col-md-1"><img src="{{match.awayTeam.crestUrl}}"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>

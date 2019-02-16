@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatchService} from '../services/match.service';
 import {Match} from '../models/match';
 import {TeamService} from '../services/team.service';
@@ -15,17 +15,42 @@ export class MatchListComponent implements OnInit {
   matchList: Match[] = [];
   teamList: Team[] = [];
   selectedTeamId: number;
-  constructor(private matchService: MatchService, private teamService: TeamService) {}
 
-    ngOnInit() {
-        this.teamService.getAllTeam().subscribe((success) => {
-          this.matchService.getMatchList().subscribe((response) => {
-            this.matchList = response;
-            }, (error1 => {
-              console.log(error1);
-            })
-          );
-          this.teamList = success;
-        });
+  tmpNumArray: number[] = [];
+
+  // MAP DAY -> MATCH ARRAY
+  matchDayMap = new Map<number, Match[]>();
+
+  constructor(private matchService: MatchService, private teamService: TeamService) {
+    this.tmpNumArray.push(0);
+    this.tmpNumArray.push(1);
+  }
+
+  ngOnInit() {
+    this.teamService.getAllTeam().subscribe((success) => {
+      this.matchService.getMatchList().subscribe((response) => {
+          this.matchList = response;
+          this.convertArrayInMap();
+        }, (error1 => {
+          console.log(error1);
+        })
+      );
+      this.teamList = success;
+    });
+  }
+
+  convertArrayInMap() {
+    for (const day of this.matchList) {
+      if (this.matchDayMap.get(day.matchDay)) {
+        this.matchDayMap.get(day.matchDay).push(day);
+      } else {
+        const tmpArr: Match[] = [];
+        tmpArr.push(day);
+        this.matchDayMap.set(day.matchDay, tmpArr);
       }
     }
+
+    console.log(this.matchDayMap);
+  }
+
+}

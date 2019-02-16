@@ -11,6 +11,7 @@ import {Team} from '../models/team';
 export class MatchService {
 
   static matchCache: Match[] = [];
+  matchPerDay = new Array<number>();
   headers = { headers: new HttpHeaders({'X-Auth-Token': '7b5abcb291ec4fd194fe07b26b80936d' })};
   constructor(private http: HttpClient) { }
 
