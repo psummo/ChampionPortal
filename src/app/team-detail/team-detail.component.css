@@ -19,3 +19,15 @@ li{
   font-size: 20px;
   vertical-align: center;
 }
+
+.panel-heading  > .row {
+  border-style: solid;
+  border-color: darkgrey;
+  background-color: lightgrey;
+  padding: auto;
+}
+
+.panel-heading {
+  width: 1200px;
+  position: center;
+}

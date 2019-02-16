@@ -1,17 +1,97 @@
+
+
+
+
 <div *ngIf="teamSelected">
-  <img src="{{teamSelected.crestUrl}}" style="width: 100px; height: 100px">
-  <h1>{{teamSelected.name}}</h1>
+  <div class="container">
+  <div class="row">
+    <div class="col-md-5"> <img src="{{teamSelected.crestUrl}}" style="width: 170px; height: 170px"></div>
+    <div class="col-md-7"><br><br><svg height="150" width="500">
+      <text x="10" y="60" font-size="70"  fill="black">{{teamSelected.name}}</text>
+    </svg><br><br><br>
+    </div>
+  </div>
+
+  <!--  <div class="panel-heading">
+      <div class="row">
+
+        <div class="col-md-5"><br><br><h1>Informazioni squadra</h1> </div>
+        <div class="panel-body">
+          <h5><br> Fondata nel: {{teamSelected.founded}}</h5>
+          <h5><br>Stadio: {{teamSelected.venue}}</h5>
+          <h5><br>Sito Web: {{teamSelected.website}}</h5>
+        </div> <br>
+      </div>
+    </div>
+
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-5"><br><h1>Competizioni attive</h1></div>
+
+          <div class="panel-body">
+            <h5 *ngFor="let nameCompetition of teamSelected.activeCompetition">
+              <br>{{nameCompetition.name}}
+            </h5>
+          </div>
+        </div>
+      </div>
+</div>
+</div> <br> -->
+
+
+
+
+<div class="panel-heading">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5"><br><br><h1>Informazioni squadra</h1>
+      <div class="panel-body">
+        <h5><br> Fondata nel: {{teamSelected.founded}}</h5>
+        <h5><br>Stadio: {{teamSelected.venue}}</h5>
+        <h5><br>Sito Web: {{teamSelected.website}}</h5>
+      </div>
+      <br>
+    </div>
+    <div class="col-md-5"><br><br><h1>Competizioni attive</h1>
+      <div class="panel-body">
+        <br><h5 *ngFor="let nameCompetition of teamSelected.activeCompetition">
+        <br>{{nameCompetition.name}}</h5>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
 </div>
 
-<div>
-  <ul>
-    <li *ngFor="let player of teamSelected.squad">
-      {{player.name}}
+
+
+<!--<div>
+  <li class="container">
+    <div class="row">
+       <li *ngFor="let player of teamSelected.squad"></li>
+          <div class="col-md-3"><h3> Portieri</h3>
+            <li *ngIf="player.role == 'Goalkeeper' ">
+              {{player.name}}
+            </li>
+          </div>
+
+          <div class="col-md-3"><h3 *ngIf="player.role === 'Defender' " >{{player.name}}> </h3>
+          </div>
+
+           <div class="col-md-3"><h3>Centrocampisti</h3>
+                <h3 *ngIf="player.role == 'Midfielder' " >{{player.name}}</h3>
+           </div>
+
+          <div class="col-md-3"><h3>Attaccanti</h3>
+            <li *ngIf="player.role == 'Attacker' " >{{player.name}}</li>
+          </div> -->
+
+
+      <!--{{player.name}}
       {{player.position}}
       <span class="span-shirt">
         <p>{{player.shirtNumb}}</p>
       </span>
-    </li>
-  </ul>
-</div>
+    </li> -->
+
+
 
