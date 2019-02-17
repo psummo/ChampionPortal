@@ -1,97 +1,87 @@
-
-
-
-
-<div *ngIf="teamSelected">
+<div *ngIf="teamSelected" id="team-detail">
   <div class="container">
-  <div class="row">
-    <div class="col-md-5"> <img src="{{teamSelected.crestUrl}}" style="width: 170px; height: 170px"></div>
-    <div class="col-md-7"><br><br><svg height="150" width="500">
-      <text x="10" y="60" font-size="70"  fill="black">{{teamSelected.name}}</text>
-    </svg><br><br><br>
-    </div>
-  </div>
-
-  <!--  <div class="panel-heading">
-      <div class="row">
-
-        <div class="col-md-5"><br><br><h1>Informazioni squadra</h1> </div>
-        <div class="panel-body">
-          <h5><br> Fondata nel: {{teamSelected.founded}}</h5>
-          <h5><br>Stadio: {{teamSelected.venue}}</h5>
-          <h5><br>Sito Web: {{teamSelected.website}}</h5>
-        </div> <br>
+    <div class="row">
+      <div class="col-6"><img id="logo-team" src="{{teamSelected.crestUrl}}"></div>
+      <div class="col-6"><br><br>
+        <h1>{{teamSelected.name}}</h1>
       </div>
     </div>
 
-    <div class="panel-heading">
-      <div class="row">
-        <div class="col-md-5"><br><h1>Competizioni attive</h1></div>
+    <div *ngIf="teamSelected.squad.length > 0" class="row justify-content-center">
+      <div class="col-6">
+        <h2>Informazioni squadra</h2>
+        <h5>Allenata da {{coachTeam}}</h5>
+        <h5>Fondata nel {{teamSelected.founded}}</h5>
+        <h5>{{teamSelected.venue}}</h5>
+        <h5><a href=" {{teamSelected.website}}">Sito web</a></h5>
+      </div>
+      <div class="col-6">
+        <h3>Competizioni attive</h3>
+        <h5 *ngFor="let nameCompetition of teamSelected.activeCompetition">{{nameCompetition.name}}</h5>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <div class="container">
+    <div class="row">
 
-          <div class="panel-body">
-            <h5 *ngFor="let nameCompetition of teamSelected.activeCompetition">
-              <br>{{nameCompetition.name}}
-            </h5>
+      <div class="col-lg-3 col-md-6">
+        <h3>Portieri</h3>
+        <div *ngFor="let goalKepp of mapRole.get('Goalkeeper')" class="role-player">
+          <div class="row justify-content-center">
+            <div class="col-8" >{{goalKepp.name}}</div>
+            <div class="col-3 ">
+                <span class="span-shirt">
+                <p>{{goalKepp.shirtNumb}}</p>
+                </span>
+            </div>
           </div>
         </div>
       </div>
-</div>
-</div> <br> -->
 
-
-
-
-<div class="panel-heading">
-  <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-5"><br><br><h1>Informazioni squadra</h1>
-      <div class="panel-body">
-        <h5><br> Fondata nel: {{teamSelected.founded}}</h5>
-        <h5><br>Stadio: {{teamSelected.venue}}</h5>
-        <h5><br>Sito Web: {{teamSelected.website}}</h5>
+      <div class="col-lg-3 col-md-6">
+        <h3>Difensori</h3>
+        <div *ngFor="let defend of mapRole.get('Defender')" class="role-player">
+          <div class="row justify-content-center">
+            <div class="col-8">{{defend.name}}</div>
+            <div class="col-3">
+            <span class="span-shirt">
+                <p>{{defend.shirtNumb}}</p>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <br>
-    </div>
-    <div class="col-md-5"><br><br><h1>Competizioni attive</h1>
-      <div class="panel-body">
-        <br><h5 *ngFor="let nameCompetition of teamSelected.activeCompetition">
-        <br>{{nameCompetition.name}}</h5>
+
+      <div class="col-lg-3 col-md-6">
+        <h3>Centrocampisti</h3>
+        <div *ngFor="let mid of mapRole.get('Midfielder')" class="role-player">
+          <div class="row justify-content-center">
+            <div class="col-8">{{mid.name}}</div>
+            <div class="col-3">
+              <span class="span-shirt">
+                <p>{{mid.shirtNumb}}</p>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <h3>Attaccanti</h3>
+        <div *ngFor="let attack of mapRole.get('Attacker')" class="role-player">
+          <div class="row justify-content-center">
+            <div class="col-8">{{attack.name}}</div>
+            <div class="col-3">
+              <span class="span-shirt">
+                <p>{{attack.shirtNumb}}</p>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-1"></div>
   </div>
+
 </div>
-
-
-
-<!--<div>
-  <li class="container">
-    <div class="row">
-       <li *ngFor="let player of teamSelected.squad"></li>
-          <div class="col-md-3"><h3> Portieri</h3>
-            <li *ngIf="player.role == 'Goalkeeper' ">
-              {{player.name}}
-            </li>
-          </div>
-
-          <div class="col-md-3"><h3 *ngIf="player.role === 'Defender' " >{{player.name}}> </h3>
-          </div>
-
-           <div class="col-md-3"><h3>Centrocampisti</h3>
-                <h3 *ngIf="player.role == 'Midfielder' " >{{player.name}}</h3>
-           </div>
-
-          <div class="col-md-3"><h3>Attaccanti</h3>
-            <li *ngIf="player.role == 'Attacker' " >{{player.name}}</li>
-          </div> -->
-
-
-      <!--{{player.name}}
-      {{player.position}}
-      <span class="span-shirt">
-        <p>{{player.shirtNumb}}</p>
-      </span>
-    </li> -->
-
-
-

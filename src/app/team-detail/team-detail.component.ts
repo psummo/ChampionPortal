@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Team} from '../models/team';
 import {TeamService} from '../services/team.service';
+import {Player} from '../models/player';
 
 @Component({
   selector: 'app-team-detail',
@@ -12,17 +13,36 @@ export class TeamDetailComponent implements OnInit {
 
   id: number;
   teamSelected: Team;
+  coachTeam: string;
+  mapRole = new Map<string, Player[]>();
   constructor(private root: ActivatedRoute, private teamService: TeamService) { }
 
   ngOnInit() {
-    try {
+
       this.root.paramMap.subscribe((param) => this.id = +param.get('id'));
       this.teamService.getTeamById(this.id).subscribe((response) => {
-        console.log(response.squad[1].shirtNumb);
+        console.log(response);
         this.teamSelected = response;
+        this.dividePerRole();
       });
-    } catch (e) {
-      console.log('indirizzo errato');
+
+  }
+  dividePerRole() {
+    for (const player of this.teamSelected.squad) {
+      if (this.mapRole.get(player.position)) {
+        this.mapRole.get(player.position).push(player);
+      } else {
+        const tmpArray: Player[] = [];
+        tmpArray.push(player);
+        this.mapRole.set(player.position, tmpArray);
+      }
+    }
+    for (const coach of this.teamSelected.squad) {
+      if (coach.role === 'COACH') {
+        this.coachTeam = coach.name;
+        return;
+      }
+
     }
   }
 }

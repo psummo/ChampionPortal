@@ -11,16 +11,28 @@
 .row > div {
   line-height: 50px;
   }
+
 .row > div > h4 {
   text-align: center;
   line-height: 50px;
 
 }
-
 .card{
+
   text-align: center;
+  background: rgba(251, 255, 246, 0.65);
 }
 
-.card-body{
+.list-match{
   cursor: pointer;
+}
+.card-body{
+  flex: 1;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+  background: rgba(10,10,10,0.5);
+
 }

@@ -15,15 +15,11 @@ export class MatchListComponent implements OnInit {
   matchList: Match[] = [];
   teamList: Team[] = [];
   selectedTeamId: number;
-
-  tmpNumArray: number[] = [];
-
   // MAP DAY -> MATCH ARRAY
   matchDayMap = new Map<number, Match[]>();
 
+  // TODO SISTEMARE VERSIONE MOBILE: SECONDA SQUADRA DI UN MATCH VA INVERTITA AL PUNTEGGIO
   constructor(private matchService: MatchService, private teamService: TeamService) {
-    this.tmpNumArray.push(0);
-    this.tmpNumArray.push(1);
   }
 
   ngOnInit() {

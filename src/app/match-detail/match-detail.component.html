@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="matchSelected">
   <h1 class="offset-lg-2">
     <div class="home-container" [routerLink]="['/team', matchSelected.homeTeam.id]">
       <img class="logo-team hidden-sm" src="{{matchSelected.homeTeam.crestUrl}}" alt="logo non disponibile">{{matchSelected.homeTeam.name}}</div>

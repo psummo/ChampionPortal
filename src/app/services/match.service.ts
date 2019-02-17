@@ -44,7 +44,6 @@ export class MatchService {
       .pipe(
         map(
           (response: any) => {
-            console.log('sono in getMatchByid', response);
             return Match.fromJson(response['match']);
           }
         )

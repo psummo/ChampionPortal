@@ -1,33 +1,38 @@
 .span-shirt{
   background: url("../../assets/images/shirt.svg") no-repeat;
   display:inline-flex;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   vertical-align: middle;
   text-align: center;
   vertical-align: middle;
 
+
+}
+
+#logo-team {
+  width: 170px;
+  height: 170px
 }
 
 .span-shirt > p {
-  color: red;
+  color: white;
   margin: auto;
 }
-
-li{
-  height: 50px;
-  font-size: 20px;
-  vertical-align: center;
+#team-detail{
+  background: rgba(10,10,10,0.3);
+  color: white;
+}
+.row {
+  text-align: center;
 }
 
-.panel-heading  > .row {
-  border-style: solid;
-  border-color: darkgrey;
-  background-color: lightgrey;
-  padding: auto;
+.name-player{
+  vertical-align: middle;
+  border: 2px red solid;
 }
+.role-player{
+  height: 60px;
+  text-align: center;
 
-.panel-heading {
-  width: 1200px;
-  position: center;
 }

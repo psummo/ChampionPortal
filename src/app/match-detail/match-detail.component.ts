@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TeamService} from '../services/team.service';
 import {Team} from '../models/team';
@@ -21,12 +21,12 @@ export class MatchDetailComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.matchId = +params.get('id');
     });
-    this.matchService.getMatchById(this.matchId).subscribe((response) => {
-        this.matchSelected = response;
-        console.log('faccio getMatchById', this.matchSelected);
-      }, (error1 => {
-         console.log(error1);
-      })
-    );
+    this.teamService.getAllTeam().subscribe((responseTeam) => {
+      this.matchService.getMatchById(this.matchId).subscribe((responseMatch) => {
+          this.matchSelected = responseMatch;
+        }, (error1 => {
+        })
+      );
+    });
   }
 }

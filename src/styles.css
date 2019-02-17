@@ -4,5 +4,8 @@
   height: 50px;
 }
 body{
-  background: url("assets/images/background-giornate.jpg") fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("assets/images/background-giornate.jpg");
+  background-attachment: fixed;
 }

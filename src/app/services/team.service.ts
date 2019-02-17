@@ -22,41 +22,35 @@ export class TeamService {
     let retrieveAllInfo = true;
     let retrieveTeam: Team = null;
     // CHECK IF THERE ARE ALREADY INFO ABOUT TEAM IN ARRAY/CACHE
-    if (TeamService.teamCache.length !== 0) {
-      for (const team of TeamService.teamCache) {
-        if (team.id === idTeam && team.squad.length > 0) {
-          retrieveAllInfo = false;
-          retrieveOtherInfo = false;
-          retrieveTeam = team;
-          return;
-        } else if (team.id === idTeam && team.squad.length === 0) {
-          retrieveAllInfo = false;
-          retrieveTeam = team;
-          return;
-        }
+    for (const team of TeamService.teamCache) {
+      if (team.id === idTeam && team.squad.length > 0) {
+        retrieveAllInfo = false;
+        retrieveOtherInfo = false;
+        retrieveTeam = team;
+      } else if (team.id === idTeam && team.squad.length === 0) {
+        retrieveAllInfo = false;
+        retrieveTeam = team;
       }
     }
-    if (retrieveAllInfo || retrieveOtherInfo) {
-      return this.http.get(url, this.headers)
-        .pipe(
-          map((response: any) => {
+    return this.http.get(url, this.headers)
+      .pipe(
+        map((response: any) => {
 
-              if (retrieveAllInfo) {
-                const tmpTeam = Team.fromJson(response);
-                tmpTeam.squad = Team.addSquad(response['squad']);
-                tmpTeam.activeCompetition = Team.addCompetitions(response['activeCompetitions']);
-                TeamService.teamCache.push(tmpTeam);
-                return tmpTeam;
-              } else if (retrieveOtherInfo && !retrieveAllInfo) {
-                const index = TeamService.teamCache.indexOf(retrieveTeam);
-                TeamService.teamCache[index].squad = Team.addSquad(response['squad']);
-                TeamService.teamCache[index].activeCompetition = Team.addCompetitions(response['activeCompetitions']);
-                return TeamService.teamCache[index];
-              }
+            if (retrieveAllInfo) {
+              const tmpTeam = Team.fromJson(response);
+              tmpTeam.squad = Team.addSquad(response['squad']);
+              tmpTeam.activeCompetition = Team.addCompetitions(response['activeCompetitions']);
+              TeamService.teamCache.push(tmpTeam);
+              return tmpTeam;
+            } else if (retrieveOtherInfo && !retrieveAllInfo) {
+              const index = TeamService.teamCache.indexOf(retrieveTeam);
+              TeamService.teamCache[index].squad = Team.addSquad(response['squad']);
+              TeamService.teamCache[index].activeCompetition = Team.addCompetitions(response['activeCompetitions']);
+              return TeamService.teamCache[index];
             }
-          )
-        );
-    }
+          }
+        )
+      );
   }
 
   // GET PARTIAL INFO ABOUT TEAMs ON STARTUP
