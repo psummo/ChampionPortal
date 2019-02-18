@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {Match} from '../models/match';
-import {map, catchError, retry, delay, retryWhen} from 'rxjs/operators';
-import {Team} from '../models/team';
+import {map, delay, retryWhen} from 'rxjs/operators';
 import {LocalStorageService} from './local-storage.service';
 import {Headtohead} from '../models/headtohead';
 
@@ -20,12 +19,13 @@ enum Attributes {
 export class MatchService {
 
   static matchCache: Match[] = [];
-  matchPerDay = new Array<number>();
-  headers = { headers: new HttpHeaders({'X-Auth-Token': '7b5abcb291ec4fd194fe07b26b80936d' })};
-  constructor(private http: HttpClient, private localService: LocalStorageService) { }
+  headers = {headers: new HttpHeaders({'X-Auth-Token': '7b5abcb291ec4fd194fe07b26b80936d'})};
+
+  constructor(private http: HttpClient, private localService: LocalStorageService) {
+  }
 
   getMatchList(): Observable<Match[]> {
-    MatchService.matchCache = this.localService.retriveDaysMatches();
+    MatchService.matchCache = this.convertToMatchArray(this.localService.retriveDaysMatches());
     if (MatchService.matchCache.length === 0) {
       const url = 'https://api.football-data.org/v2/competitions/SA/matches?season=2018';
 
@@ -33,8 +33,8 @@ export class MatchService {
         .pipe(
           map(
             (response: any[]) => {
-              this.localService.initializeLocalStorage('matchArray', response['matches']);
-              return response['matches'].map((matchJson) => {
+              this.localService.initializeLocalStorage('matchArray', response[Attributes.matches]);
+              return response[Attributes.matches].map((matchJson) => {
                 const matchTmp = Match.fromJson(matchJson);
                 // CACHE SOME INFO OF TEAMs
                 MatchService.matchCache.push(matchTmp);
@@ -43,7 +43,7 @@ export class MatchService {
             }
           ),
           retryWhen(errors => errors.pipe(
-            delay( 2000)
+            delay(2000)
           ))
         );
     } else {
@@ -64,8 +64,16 @@ export class MatchService {
           }
         ),
         retryWhen(errors => errors.pipe(
-          delay( 2000)
+          delay(2000)
         ))
       );
+  }
+
+  convertToMatchArray(jsonMatches: any): Match[] {
+    const matchArray: Match[] = [];
+    for (const match of jsonMatches) {
+      matchArray.push(Match.fromJson(match));
+    }
+    return matchArray;
   }
 }

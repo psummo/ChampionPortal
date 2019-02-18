@@ -1,5 +1,6 @@
 h1{
   cursor: pointer;
+  text-align: center;
 }
 
 .home-container{
@@ -34,7 +35,9 @@ h1{
   margin: -100px 0 0 -150px;
   color: white;
 }
-
+#loader-message > h6 {
+  color: white;
+}
 .container-fluid{
   height:100%;
   display:table;
