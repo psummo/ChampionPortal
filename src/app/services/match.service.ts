@@ -4,10 +4,18 @@ import {Observable, of} from 'rxjs';
 import {Match} from '../models/match';
 import {map} from 'rxjs/operators';
 import {Team} from '../models/team';
+import {Headtohead} from '../models/headtohead';
+
+enum Attributes {
+  matches = 'matches',
+  head2head = 'head2head',
+  match = 'match'
+}
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class MatchService {
 
   static matchCache: Match[] = [];
@@ -24,7 +32,7 @@ export class MatchService {
         .pipe(
           map(
             (response: any[]) => {
-              return response['matches'].map((matchJson) => {
+              return response[Attributes.matches].map((matchJson) => {
                 const matchTmp = Match.fromJson(matchJson);
                 // CACHE SOME INFO OF TEAMs
                 MatchService.matchCache.push(matchTmp);
@@ -38,13 +46,16 @@ export class MatchService {
     }
   }
 
-  getMatchById(idMatch: number): Observable<Match> {
+  getMatchById(idMatch: number): Observable<any[]> {
     const url = `http://api.football-data.org/v2/matches/${idMatch}`;
+    const tmpObj: any[] = [];
     return this.http.get(url, this.headers)
       .pipe(
         map(
           (response: any) => {
-            return Match.fromJson(response['match']);
+            tmpObj.push(Headtohead.fromJson(response[Attributes.head2head]), Match.fromJson(response[Attributes.match]));
+            console.log('Response match getMatchById->', tmpObj);
+            return tmpObj;
           }
         )
       );

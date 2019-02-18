@@ -4,6 +4,7 @@ import {TeamService} from '../services/team.service';
 import {Team} from '../models/team';
 import {MatchService} from '../services/match.service';
 import {Match} from '../models/match';
+import {Headtohead} from '../models/headtohead';
 
 @Component({
   selector: 'app-match-detail',
@@ -13,6 +14,7 @@ import {Match} from '../models/match';
 export class MatchDetailComponent implements OnInit {
   matchId: number;
   matchSelected: Match;
+  headToHeadSelected: Headtohead;
 
   constructor(private route: ActivatedRoute, private matchService: MatchService, private  teamService: TeamService) {
   }
@@ -23,7 +25,9 @@ export class MatchDetailComponent implements OnInit {
     });
     this.teamService.getAllTeam().subscribe((responseTeam) => {
       this.matchService.getMatchById(this.matchId).subscribe((responseMatch) => {
-          this.matchSelected = responseMatch;
+          console.log('In MAtch Detail->', responseMatch);
+          this.matchSelected = responseMatch[1];
+          this.headToHeadSelected = responseMatch[0];
         }, (error1 => {
         })
       );

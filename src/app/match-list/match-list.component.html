@@ -25,12 +25,12 @@
         <div class="card-body container-fluid">
           <div *ngFor="let match of dayMatch.value" class="row justify-content-center list-match" [routerLink]="['/match', match.id]" >
 
-            <div class="col-sm-1 d-none"><img src="{{match.homeTeam.crestUrl}}"></div>
+            <div class="col-sm-1"><img src="{{match.homeTeam.crestUrl}}"></div>
             <div class="col-sm-4 col-7">{{match.homeTeam.name}}</div>
             <div class="col-sm-1 col-3"><h4>{{match.fullTime[0]}}</h4></div>
-            <div class="col-sm-1 order-4"><h4>{{match.fullTime[1]}}</h4></div>
-            <div class="col-sm-4 order-1 ">{{match.awayTeam.name}}</div>
-            <div class="col-sm-1 d-none"><img src="{{match.awayTeam.crestUrl}}"></div>
+            <div class="col-sm-1"><h4>{{match.fullTime[1]}}</h4></div>
+            <div class="col-sm-4">{{match.awayTeam.name}}</div>
+            <div class="col-sm-1"><img src="{{match.awayTeam.crestUrl}}"></div>
           </div>
         </div>
       </div>
