@@ -1,7 +1,5 @@
-h1, h3{
-
+h1{
   cursor: pointer;
-  text-align: center;
 }
 
 .home-container{
@@ -10,6 +8,31 @@ h1, h3{
 
 .away-container{
   display: inline;
+}
+
+.match-logo{
+  width: 150px;
+  height: 150px;
+}
+
+#loader-container{
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+
+
+}
+
+#loader-message{
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  margin: -100px 0 0 -150px;
+  color: white;
 }
 
 .container-fluid{

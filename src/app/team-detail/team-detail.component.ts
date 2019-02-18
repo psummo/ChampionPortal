@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Team} from '../models/team';
 import {TeamService} from '../services/team.service';
 import {Player} from '../models/player';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-team-detail',
@@ -15,12 +16,15 @@ export class TeamDetailComponent implements OnInit {
   teamSelected: Team;
   coachTeam: string;
   mapRole = new Map<string, Player[]>();
+  loader = true;
   constructor(private root: ActivatedRoute, private teamService: TeamService) { }
 
   ngOnInit() {
 
       this.root.paramMap.subscribe((param) => this.id = +param.get('id'));
-      this.teamService.getTeamById(this.id).subscribe((response) => {
+      this.teamService.getTeamById(this.id).pipe(finalize(() => {
+        this.loader = false;
+      })).subscribe((response) => {
         console.log(response);
         this.teamSelected = response;
         this.dividePerRole();

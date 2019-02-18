@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Team} from '../models/team';
 import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {delay, map, retryWhen} from 'rxjs/operators';
+import {LocalStorageService} from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class TeamService {
   static teamCache: Team[] = [];
   headers = {headers: new HttpHeaders({'X-Auth-Token': '7b5abcb291ec4fd194fe07b26b80936d'})};
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private localCacheService: LocalStorageService) {
   }
 
   // GET INFO ABOUT A SINGLE TEAM
@@ -41,36 +42,46 @@ export class TeamService {
               tmpTeam.squad = Team.addSquad(response['squad']);
               tmpTeam.activeCompetition = Team.addCompetitions(response['activeCompetitions']);
               TeamService.teamCache.push(tmpTeam);
+              this.localCacheService.addInfoTeam(tmpTeam);
               return tmpTeam;
             } else if (retrieveOtherInfo && !retrieveAllInfo) {
               const index = TeamService.teamCache.indexOf(retrieveTeam);
               TeamService.teamCache[index].squad = Team.addSquad(response['squad']);
               TeamService.teamCache[index].activeCompetition = Team.addCompetitions(response['activeCompetitions']);
+              this.localCacheService.addInfoTeam(TeamService.teamCache[index]);
               return TeamService.teamCache[index];
             }
           }
-        )
+        ),
+        retryWhen(errors => errors.pipe(
+          delay( 2000)
+        ))
       );
   }
-
   // GET PARTIAL INFO ABOUT TEAMs ON STARTUP
   getAllTeam(): Observable<Team[]> {
+    TeamService.teamCache = this.localCacheService.retriveInfoTeams();
     if (TeamService.teamCache.length === 0) {
       const url = 'https://api.football-data.org/v2/competitions/SA/teams';
       return this.http.get(url, this.headers)
         .pipe(
           map((response: any[]) => {
+            //SAVE IN LOCAL STORAGE
+              this.localCacheService.initializeLocalStorage('teamArray', response['teams']);
               return response['teams'].map((teamJson) => {
-                const teamTmp = Team.fromJson(teamJson);
+                const tmpTeam = Team.fromJson(teamJson);
                 // CACHE SOME INFO OF TEAMs
-                TeamService.teamCache.push(teamTmp);
-                return teamTmp;
+                TeamService.teamCache.push(tmpTeam);
+                return tmpTeam;
               });
             }
-          )
+          ), retryWhen(errors => errors.pipe(
+            delay( 2000)
+          ))
         );
     } else {
       return of(TeamService.teamCache);
     }
   }
 }
+

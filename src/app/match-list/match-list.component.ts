@@ -3,6 +3,7 @@ import {MatchService} from '../services/match.service';
 import {Match} from '../models/match';
 import {TeamService} from '../services/team.service';
 import {Team} from '../models/team';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-match-list',
@@ -17,6 +18,7 @@ export class MatchListComponent implements OnInit {
   selectedTeamId: number;
   // MAP DAY -> MATCH ARRAY
   matchDayMap = new Map<number, Match[]>();
+  loader = true;
 
   // TODO SISTEMARE VERSIONE MOBILE: SECONDA SQUADRA DI UN MATCH VA INVERTITA AL PUNTEGGIO
   constructor(private matchService: MatchService, private teamService: TeamService) {
@@ -24,7 +26,11 @@ export class MatchListComponent implements OnInit {
 
   ngOnInit() {
     this.teamService.getAllTeam().subscribe((success) => {
-      this.matchService.getMatchList().subscribe((response) => {
+      this.matchService.getMatchList()
+        .pipe(finalize(() => {
+          this.loader = false;
+      }))
+        .subscribe((response) => {
           this.matchList = response;
           this.convertArrayInMap();
         }, (error1 => {
@@ -38,6 +44,7 @@ export class MatchListComponent implements OnInit {
   convertArrayInMap() {
     for (const day of this.matchList) {
       if (this.matchDayMap.get(day.matchDay)) {
+
         this.matchDayMap.get(day.matchDay).push(day);
       } else {
         const tmpArr: Match[] = [];
