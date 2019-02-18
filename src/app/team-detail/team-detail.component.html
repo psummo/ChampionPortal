@@ -1,21 +1,21 @@
 <div *ngIf="teamSelected" id="team-detail">
   <div class="container">
     <div class="row justify-content-start">
-      <div class="col-2 offset-3"><img id="logo-team" src="{{teamSelected.crestUrl}}"></div>
-      <div class="col-3"><br><br>
+      <div class="col-sm-2 offset-sm-3"><img id="logo-team" src="{{teamSelected.crestUrl}}"></div>
+      <div class="col-sm-6"><br><br>
         <h1>{{teamSelected.name}}</h1>
       </div>
     </div>
     <br><br>
     <div *ngIf="teamSelected.squad.length > 0" class="row justify-content-center">
-      <div class="col-6">
-        <h2>Informazioni squadra</h2>
+      <div class="col-sm-6">
+        <h3>Informazioni squadra</h3>
         <h5>Allenata da {{coachTeam}}</h5>
         <h5>Fondata nel {{teamSelected.founded}}</h5>
         <h5>{{teamSelected.venue}}</h5>
         <h5><a href=" {{teamSelected.website}}">Sito web</a></h5>
       </div>
-      <div class="col-6">
+      <div class="col-sm-6">
         <h3>Competizioni attive</h3>
         <h5 *ngFor="let nameCompetition of teamSelected.activeCompetition">{{nameCompetition.name}}</h5>
       </div>
